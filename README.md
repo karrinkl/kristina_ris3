@@ -197,9 +197,11 @@ Get-Content tests\smoke\menu-smoke.txt | dotnet run --project src\OrderProcessin
 - Linux (Ubuntu 24.04, .NET SDK 8.0.131): `restore`, `build` (Debug и Release, без предупреждений),
   `dotnet test` — 77 из 77 тестов; 40 повторных прогонов тестов подряд и 5 прогонов на одном ядре
   (`taskset -c 0`) без падений; ручной прогон всех пунктов меню; запуск без сети.
-- Windows локально **не запускалась**. Сборку, тесты и дымовой прогон меню на `windows-latest`
-  выполняет workflow GitHub Actions (`.github/workflows/ci.yml`); его результат смотрите на вкладке
-  Actions репозитория.
+- Windows локально **не запускалась**. Проверка выполнена в GitHub Actions
+  (`.github/workflows/ci.yml`, [запуск №1](https://github.com/karrinkl/kristina_ris3/actions/runs/39251418601)
+  для коммита `fe4eb4a`): на `windows-latest` и `ubuntu-latest` сборка прошла без предупреждений,
+  тесты — 77 из 77, дымовой прогон меню завершился с кодом 0. Интерактивный режим (Esc, Ctrl+C,
+  цвета в Windows Terminal) на Windows вручную не проверялся.
 
 ## Известные ограничения
 
