@@ -1,0 +1,72 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-test:
+    name: ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+
+    env:
+      DOTNET_NOLOGO: true
+      DOTNET_CLI_TELEMETRY_OPTOUT: true
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Установка .NET 8 SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: dotnet --info
+        run: dotnet --info
+
+      - name: Восстановление зависимостей
+        run: dotnet restore Lab3.OrderProcessing.sln
+
+      - name: Сборка
+        run: dotnet build Lab3.OrderProcessing.sln --configuration Release --no-restore
+
+      - name: Тесты
+        run: dotnet test Lab3.OrderProcessing.sln --configuration Release --no-build --verbosity normal
+
+      # Дымовой прогон меню без сети: ввод подаётся из файла, программа должна завершиться с кодом 0.
+      - name: Дымовой запуск приложения (Linux)
+        if: runner.os == 'Linux'
+        shell: bash
+        run: |
+          timeout 300 dotnet run --project src/OrderProcessing.App/OrderProcessing.App.csproj --configuration Release --no-build \
+            < tests/smoke/menu-smoke.txt > smoke-output.txt
+          tail -n 5 smoke-output.txt
+          grep -q "Работа завершена" smoke-output.txt
+
+      - name: Дымовой запуск приложения (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          $p = Start-Process dotnet -ArgumentList 'run','--project','src/OrderProcessing.App/OrderProcessing.App.csproj','--configuration','Release','--no-build' `
+            -RedirectStandardInput tests/smoke/menu-smoke.txt -RedirectStandardOutput smoke-output.txt -NoNewWindow -PassThru
+          $null = $p.Handle  # иначе ExitCode у Start-Process может остаться пустым
+          if (-not $p.WaitForExit(300000)) { $p.Kill(); throw "Приложение не завершилось за 5 минут" }
+          Get-Content smoke-output.txt -Encoding utf8 -Tail 5
+          if ($p.ExitCode -ne 0) { throw "Код возврата $($p.ExitCode)" }
+          if (-not (Select-String -Path smoke-output.txt -Pattern 'Работа завершена' -Encoding utf8 -Quiet)) { throw "Нет строки завершения" }
+
+      - name: Протокол дымового запуска
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: smoke-output-${{ matrix.os }}
+          path: smoke-output.txt
+          if-no-files-found: ignore

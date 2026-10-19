@@ -1,0 +1,8 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>OrderProcessing.Core</RootNamespace>
+    <AssemblyName>OrderProcessing.Core</AssemblyName>
+  </PropertyGroup>
+
+</Project>

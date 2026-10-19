@@ -1,0 +1,125 @@
+{
+  "orders": [
+    {
+      "id": 1,
+      "customer": "Иванов И.",
+      "email": "ivanov@example.test",
+      "paymentMethod": "card",
+      "scenario": "успешная обработка",
+      "items": [
+        { "sku": "KB-01", "name": "Клавиатура", "quantity": 1, "unitPrice": 3500 },
+        { "sku": "MS-02", "name": "Мышь", "quantity": 1, "unitPrice": 1200 }
+      ]
+    },
+    {
+      "id": 2,
+      "customer": "Петрова А.",
+      "email": "petrova@example.test",
+      "paymentMethod": "bonus",
+      "scenario": "успешная обработка, оплата бонусами (Task.FromResult)",
+      "items": [
+        { "sku": "CB-10", "name": "Кабель USB-C", "quantity": 2, "unitPrice": 490 }
+      ]
+    },
+    {
+      "id": 3,
+      "customer": "Сидоров П.",
+      "email": "sidorov@example.test",
+      "paymentMethod": "card",
+      "scenario": "успешная обработка",
+      "items": [
+        { "sku": "MN-27", "name": "Монитор 27\"", "quantity": 1, "unitPrice": 18990 }
+      ]
+    },
+    {
+      "id": 4,
+      "customer": "Пустой заказ",
+      "email": "empty@example.test",
+      "paymentMethod": "card",
+      "scenario": "ошибка проверки: нет товаров",
+      "items": []
+    },
+    {
+      "id": 5,
+      "customer": "Кузнецова Е.",
+      "email": "kuznetsova@example.test",
+      "paymentMethod": "card",
+      "scenario": "ошибка проверки: товара нет в каталоге",
+      "items": [
+        { "sku": "XX-404", "name": "Несуществующий товар", "quantity": 1, "unitPrice": 100 }
+      ]
+    },
+    {
+      "id": 6,
+      "customer": "Смирнов Д.",
+      "email": "smirnov@example.test",
+      "paymentMethod": "card-declined",
+      "scenario": "ошибка оплаты: банк отклонил платёж (повтор не поможет)",
+      "items": [
+        { "sku": "HS-05", "name": "Гарнитура", "quantity": 1, "unitPrice": 4500 }
+      ]
+    },
+    {
+      "id": 7,
+      "customer": "Попова О.",
+      "email": "popova@example.test",
+      "paymentMethod": "card-flaky",
+      "scenario": "временная ошибка оплаты: успех при повторе",
+      "items": [
+        { "sku": "SSD-1T", "name": "SSD 1 ТБ", "quantity": 1, "unitPrice": 7990 }
+      ]
+    },
+    {
+      "id": 8,
+      "customer": "Волков С.",
+      "email": "offline.volkov@example.test",
+      "paymentMethod": "card",
+      "scenario": "временная ошибка уведомления: при повторе оплата не повторяется",
+      "items": [
+        { "sku": "KB-01", "name": "Клавиатура", "quantity": 2, "unitPrice": 3500 }
+      ]
+    },
+    {
+      "id": 9,
+      "customer": "Лебедева М.",
+      "email": "lebedeva@example.test",
+      "paymentMethod": "card",
+      "scenario": "нехватка товара на складе (в наличии 2)",
+      "items": [
+        { "sku": "LT-15", "name": "Ноутбук 15\"", "quantity": 3, "unitPrice": 65990 }
+      ]
+    },
+    {
+      "id": 10,
+      "customer": "Козлов Н.",
+      "email": "kozlov@example.test",
+      "paymentMethod": "card",
+      "scenario": "непредвиденная ошибка: повреждённая карточка товара",
+      "items": [
+        { "sku": "BROKEN-01", "name": "Товар с повреждённой карточкой", "quantity": 1, "unitPrice": 1 }
+      ]
+    },
+    {
+      "id": 11,
+      "customer": "Новикова Т.",
+      "email": "novikova@example.test",
+      "paymentMethod": "card",
+      "scenario": "успешная обработка",
+      "items": [
+        { "sku": "SSD-1T", "name": "SSD 1 ТБ", "quantity": 1, "unitPrice": 7990 },
+        { "sku": "CB-10", "name": "Кабель USB-C", "quantity": 1, "unitPrice": 490 }
+      ]
+    },
+    {
+      "id": 12,
+      "customer": "Морозов А.",
+      "email": "morozov@example.test",
+      "paymentMethod": "card",
+      "scenario": "успешная обработка",
+      "items": [
+        { "sku": "HS-05", "name": "Гарнитура", "quantity": 1, "unitPrice": 4500 },
+        { "sku": "MS-02", "name": "Мышь", "quantity": 2, "unitPrice": 1200 }
+      ]
+    }
+  ]
+}

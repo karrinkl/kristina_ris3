@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>OrderProcessing.App</RootNamespace>
+    <AssemblyName>OrderProcessing.App</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\OrderProcessing.Core\OrderProcessing.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Демонстрационные заказы копируются рядом с исполняемым файлом: data/orders.json -->
+    <None Include="..\..\data\orders.json" Link="data\orders.json" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+</Project>
